@@ -1,0 +1,19 @@
+Type: Compendium
+Package: Geocomputation with R, RGS workshop
+Title: Geocomputation with R workshop materials
+Version: 0.0.1
+Authors@R: 
+     person("Robin", "Lovelace", email = "rob00x@gmail.com", role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-5679-6536"))
+Description: Workshop to teach reproducible, open source
+    software, for geographic research
+License: MIT
+Depends: 
+    curl,
+    knitr,
+    rmarkdown,
+    spData
+Remotes: 
+    r-spatial/sf
+Encoding: UTF-8
+LazyData: true

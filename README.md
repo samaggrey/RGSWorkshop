@@ -3,9 +3,12 @@
 
 # Geocomputation with R: Royal Geographic Society workshop
 
+<!-- badges: start --> [![Launch Rstudio
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/geocompr/RGSWorkshop/master?urlpath=rstudio)
 [![Build
 Status](https://travis-ci.org/Robinlovelace/geocompr.svg?branch=master)](https://travis-ci.org/Robinlovelace/geocompr)
 [![](https://img.shields.io/docker/automated/robinlovelace/geocompr.svg)](https://hub.docker.com/r/robinlovelace/geocompr/builds/)
+<!-- badges: end -->
 
 This repo contains a workbook to work through the [Geocomputation with R
 pre-conference
