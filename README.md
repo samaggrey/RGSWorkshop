@@ -29,12 +29,42 @@ Series](https://www.crcpress.com/Chapman--HallCRC-The-R-Series/book-series/CRCTH
 The online version of this book is free to read at
 <https://geocompr.robinlovelace.net/>.
 
-## Getting started
+## Getting started / homework
+
+There are a few things to prepare before attempting these exercises.
+
+Make sure you have a decent computer with enough battery life to last
+the duration of the course.
 
 This tutorial assumes you have installed a recent version of R, an
 editor you’re comfortable with (we recommend RStudio), and the necessary
-packages. If you have not, check out the guidance here:
+packages. If you fail to get the software installed, you can run RStudio
+in Binder the button at
+[github.com/geocompr/RGSWorkshop](https://github.com/geocompr/RGSWorkshop):
+
+[![Launch Rstudio
+Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/geocompr/RGSWorkshop/master?urlpath=rstudio)
+
+However, we recommend installing R on your computer before you begin so
+you can take control of your computing (that binder instance is not for
+real world applications and you should learn to use R ‘in the wild’).
+
+To install R on your computer, check out the guidance here:
 <https://geocompr.robinlovelace.net/spatial-class.html#prerequisites>
+
+If you’re a complete R beginner, it is strongly recommend that you spend
+some time reading about R and undertaking an introductory tutorial. Good
+places to start include:
+
+  - Getting started notes from RStudio:
+    <https://support.rstudio.com/hc/en-us/articles/201141096-Getting-Started-with-R>
+  - Information on where to look to learn R:
+    <https://csgillespie.github.io/efficientR/learning.html>
+  - The free datacamp course:
+    <https://www.datacamp.com/courses/free-introduction-to-r>
+  - An introduction to “Why use R for geographic data?”:
+    <https://geocompr.robinlovelace.net/intro.html#why-use-r-for-geocomputation>
+
 The packages we’ll can be installed as follows\[1\]:
 
 ``` r
@@ -44,9 +74,10 @@ install.packages("spData")
 
 All the packages needed to reproduce the contents of the book can be
 installed with the following command:
-`devtools::install_github("geocompr/geocompkg")`. The necessary packages
-can be ‘loaded’ (technically they are attached) with the `library()`
-function as follows:
+`devtools::install_github("geocompr/geocompkg")` (note: all this will
+take some time to run - recommended to do before the course). The
+necessary packages can be ‘loaded’ (technically they are attached) with
+the `library()` function as follows:
 
 ``` r
 library(sf)          # classes and functions for vector data
