@@ -2,10 +2,10 @@
 remotes::install_github("karthik/holepunch")
 
 library(holepunch)
-write_compendium_description(package = "Geocomputation with R, RGS workshop", 
-                             description = "Workshop to teach reproducible, open source software, for geographic research")
+write_compendium_description(package = "Geocomputation with R", 
+                             description = "Open source book on R for reproducible, geographic research")
 
-write_dockerfile(maintainer = "Robin Lovelace") 
+write_dockerfile(maintainer = "Robin Lovelace, Jakub Nowosad, Jannes Muenchow") 
 
 generate_badge() # This generates a badge for your readme.
 
