@@ -54,3 +54,9 @@ coffee=c(2,3,5,2,0)
 town=c("High Wickham","Budapest","Bristol","Chester","Buffalo")
 new_coffee=data.frame(name,coffee,town)
 new_coffee
+
+#add more data
+person_name <- c("Elle", "Nick", "Dan")
+n_coffee <- c(3, 9, 20)
+hometown <- c("London", "Cumbria", "Kent")
+coffee_df <- data.frame(person_name, n_coffee, hometown, likes_tea)
