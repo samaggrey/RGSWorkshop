@@ -76,3 +76,10 @@ coffee_table_df = data.frame(
   n_coffee,
   hometown
 )
+
+
+#add more data
+person_name <- c("Elle", "Nick", "Dan")
+n_coffee <- c(3, 9, 20)
+hometown <- c("London", "Cumbria", "Kent")
+coffee_df <- data.frame(person_name, n_coffee, hometown)
