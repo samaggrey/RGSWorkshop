@@ -50,6 +50,7 @@ tm_shape(coffee_sf) + tm_dots()
 
 write.csv(coffee_df, "coffee.csv")
 
+
 #---------------------table by the window----------------
 # recreation example
 person_name <-
@@ -64,3 +65,39 @@ coffee_df_tbtw <- data.frame(person_name,
               hometown
               )
 #---------------------------------------------------------
+
+#added data from back table
+name=c("Izzie","Greg", "Katherine", "Jeremy", "Kara")
+coffee=c(2,3,5,2,0)
+town=c("High Wickham","Budapest","Bristol","Chester","Buffalo")
+new_coffee=data.frame(name,coffee,town)
+new_coffee
+
+#SANDRA_PAUL_MAGD
+
+#create object
+x=1:3
+y=x^2
+
+#plot objects
+plot(x, y)
+
+person_name = c("sandra", "Magd", "Paul")
+n_coffee=c(1364,-533,2)
+hometown=c("Triptis", "Damascus", "London")
+
+person_name[n_coffee>= 0]
+
+
+coffee_table_df = data.frame(
+  person_name,
+  n_coffee,
+  hometown
+)
+
+
+#add more data
+person_name <- c("Elle", "Nick", "Dan")
+n_coffee <- c(3, 9, 20)
+hometown <- c("London", "Cumbria", "Kent")
+coffee_df <- data.frame(person_name, n_coffee, hometown)
