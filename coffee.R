@@ -54,3 +54,25 @@ coffee=c(2,3,5,2,0)
 town=c("High Wickham","Budapest","Bristol","Chester","Buffalo")
 new_coffee=data.frame(name,coffee,town)
 new_coffee
+
+#SANDRA_PAUL_MAGD
+
+#create object
+x=1:3
+y=x^2
+
+#plot objects
+plot(x, y)
+
+person_name = c("sandra", "Magd", "Paul")
+n_coffee=c(1364,-533,2)
+hometown=c("Triptis", "Damascus", "London")
+
+person_name[n_coffee>= 0]
+
+
+coffee_table_df = data.frame(
+  person_name,
+  n_coffee,
+  hometown
+)
