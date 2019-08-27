@@ -48,3 +48,9 @@ tm_shape(coffee_sf) + tm_dots()
 
 write.csv(coffee_df, "coffee.csv")
 
+#added data from back table
+name=c("Izzie","Greg", "Katherine", "Jeremy", "Kara")
+coffee=c(2,3,5,2,0)
+town=c("High Wickham","Budapest","Bristol","Chester","Buffalo")
+new_coffee=data.frame(name,coffee,town)
+new_coffee
