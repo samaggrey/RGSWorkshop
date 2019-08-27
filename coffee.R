@@ -28,6 +28,8 @@ coffee_df = tibble::tibble(
   hometown
 )
 
+
+
 coordinates = tmaptools::geocode_OSM(coffee_df$hometown)
 
 coffee_df = tibble::tibble(
@@ -47,6 +49,22 @@ tmap_mode("view")
 tm_shape(coffee_sf) + tm_dots()
 
 write.csv(coffee_df, "coffee.csv")
+
+
+#---------------------table by the window----------------
+# recreation example
+person_name <-
+        c("olivia", "daniel", "phil", "claudia") # this is a vector (a series of vectors of the same class)
+
+n_coffee <- c(7, 3, 10, 14)
+
+hometown <- c("doncaster", "harlech", "pretoria", "mexico_city")
+
+coffee_df_tbtw <- data.frame(person_name,
+              n_coffee,
+              hometown
+              )
+#---------------------------------------------------------
 
 #added data from back table
 name=c("Izzie","Greg", "Katherine", "Jeremy", "Kara")
