@@ -47,7 +47,7 @@ This event, sponsored by the Quantitative Methods Research Group and led by Dr. 
 --
 
 ```{r, echo=FALSE}
-newcastle_geo_talk = list(
+kensington_geo_talk = list(
   introduction = "2-3 pm: introduction to R",
   ecosystem = "3-4 pm: spatial data in R",
   vizpkgs = "4-5 pm: visualisation, map making + off piste"
@@ -55,7 +55,7 @@ newcastle_geo_talk = list(
 ```
 
 ```{r}
-str(newcastle_geo_talk)
+str(kensington_geo_talk)
 ```
 
 
@@ -132,7 +132,7 @@ m
 knitr::include_graphics("https://raw.githubusercontent.com/npct/pct-team/master/figures/rnet-newcastle-cost-road.png")
 ```
 
-- Example: Propensity to Cycle Tool (PCT) in Newcastle: http://pct.bike/m/?r=north-east
+- Example: Propensity to Cycle Tool (PCT) in London: http://pct.bike/m/?r=london
 
 ]
 
@@ -215,6 +215,13 @@ Applications
 
 ## Win this book!
 
+Enter the reproducible map comp:
+
+- most creative map making people think in new ways about geographic phenomena
+- most policy relevant map
+
+- Submission: [GitHub](https://github.com/Robinlovelace/geocompr/issues/437) by 16:30
+
 ```{r, echo=FALSE, message=FALSE}
 knitr::include_graphics("https://geocompr.robinlovelace.net/images/cover.png")
 ```
@@ -259,6 +266,199 @@ Any questions?
 
 ---
 
+## A brief history of geographic packages in R
+
+- See a [video](https://www.youtube.com/watch?v=Luxllb_WAqY) of Roger Bivand's talk on the subject (live demo of [R 0.49](https://cran.r-project.org/src/base/R-0/), released 1997) + GitHub [repo](https://github.com/rsbivand/eRum18/blob/master/eRum_keynote_18.Rmd)
+
+- Brian Ripley, on R's [core team](https://www.r-project.org/contributors.html), with strong interest in spatial stats
+
+- Rs capabilities have evolved substantially since then!
+
+--
+
+- **rgdal**, released in 2003
+
+--
+
+- **sp**, released 2005
+  - **sp**verse: **gstat**, **geosphere**, **adehabitat**
+
+- **raster**, released 2010
+
+- **sf**, released 2017
+
+---
+
+## Getting data
+
+- Many portals and packages for getting data - see [Chapter 7](https://geocompr.robinlovelace.net/read-write.html)
+
+```{r}
+library(osmdata)
+kensington = getbb("kensington, london")
+osm_data = opq(bbox = kensington) %>% 
+  add_osm_feature(key = "leisure", value = "park") %>% 
+  osmdata_sf()
+parks = osm_data$osm_polygons
+```
+
+--
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, out.height="200px"}
+library(tmap)
+tmap_mode("view")
+qtm(parks)
+tmap_mode("plot")
+```
+
+---
+
+## Getting transport data
+
+- pct package developed to make transport data more accessible
+
+--
+
+- Get transport zones for kensington
+
+```{r}
+zones_all = read_sf("zones_near_rgs.geojson")
+zones = zones_all[c("geo_code", "car_driver", "foot", "bicycle")]
+plot(zones)
+```
+
+---
+
+## sf
+
+- **sf** is a recently developed package for spatial (vector) data
+- Combines the functionality of three previous packages: **sp**, **rgeos** and **rgdal**
+- Has many advantages, including:
+    - Faster data I/O
+    - More geometry types supported
+    - Compatibility with the *tidyverse*
+
+---
+
+## Reading and writing spatial data
+
+```{r, echo=FALSE}
+library(sf)
+crashes_near_rgs = read_sf("crashes_near_rgs.geojson")
+```
+
+- `write_sf()` writes data `st_write(zones, 'zones.gpkg')`.
+
+- See supported formats with: `sf::st_drivers()`. Details: Chapter 6 of our book: [geocompr.robinlovelace.net/read-write.html](https://geocompr.robinlovelace.net/read-write.html)
+
+---
+
+## sf class 
+
+```{r}
+library(spData) # pre-packaged data
+class(zones)
+zones
+```
+
+```{r, eval=FALSE, echo=FALSE}
+# ---
+## Structure of the sf objects
+# world$name_long
+# ```
+# 
+# ```{r, echo=FALSE}
+# world$name_long[1:3]
+# ```
+# 
+# ```{r, eval=FALSE}
+# world$geom
+# ```
+# 
+# ```{r, echo=FALSE}
+# print(world$geom, n = 3)
+```
+
+---
+
+## Spatial operations
+
+It's a big topic which includes:
+
+- Spatial subsetting
+- Spatial joining/aggregation
+- Topological relations
+- Distances
+- Spatial geometry modification
+- Raster operations (map algebra)
+
+See [Chapter 4](http://geocompr.robinlovelace.net/spatial-operations.html) of *Geocomputation with R* 
+
+---
+
+## Spatial subsetting
+
+```{r, warning=FALSE}
+parks = read_sf("parks.geojson")
+crashes_in_parks = crashes_near_rgs[parks, ]
+```
+
+--
+
+```{r, echo=FALSE, message=FALSE}
+tmap_mode("view")
+tm_shape(crashes_near_rgs) +
+  tm_dots(alpha = 0.2, size = 0.1) +
+  tm_shape(parks) +
+  tm_polygons(col = "green", alpha = 0.3) +
+  tm_shape(crashes_in_parks, col = "red") +
+  tm_dots() 
+```
+
+---
+
+## Spatial subsetting II
+
+```{r, warning = FALSE, message = FALSE, fig.height = 4}
+lnd_buff = lnd[1, ] %>% 
+  st_transform(crs = 27700) %>%  # uk CRS
+  st_buffer(500000) %>%
+  st_transform(crs = 4326)
+near_lnd = world[lnd_buff, ]
+plot(near_lnd$geom)
+```
+
+- What is going with the country miles away?
+
+---
+
+## Spatial aggregation
+
+```{r}
+points_per_zone = aggregate(crashes_near_rgs[1], zones, length)
+plot(points_per_zone)
+```
+
+---
+
+## Exercises
+
+- Find Chapter 4 of Geocomputation with R online
+- Complete Section 4.2, which will involve running (at a minimum) the following code:
+
+```{r, message=FALSE}
+library(sf)
+library(spData)
+library(dplyr)
+canterbury = nz %>% filter(Name == "Canterbury")
+canterbury_height = nz_height[canterbury, ]
+```
+
+- Attempt Exercises 1:3 at the end of the chapter
+- Bonus: find out how to get the data for the RGS site and identify all crashes that happened within 200 m of the RGS building in 2017
+
+---
+
 background-image: url(https://user-images.githubusercontent.com/1825120/38543030-5794b6f0-3c9b-11e8-9da9-10ec1f3ea726.gif)
 background-size: cover
 class: center, middle
@@ -274,8 +474,7 @@ Source: [Geocomputation with R](https://geocompr.robinlovelace.net/adv-map.html#
 ## sf graphics
 
 ```{r}
-library(sf)
-# plot(zones[c("car_driver", "foot")])
+plot(zones[c("car_driver", "foot")])
 ```
 
 ---
@@ -283,6 +482,7 @@ library(sf)
 ## ggplot2
 
 ```{r}
+library(ggplot2)
 ggplot(zones) +
   geom_sf(aes(fill = bicycle)) +
   scale_fill_viridis_c()
@@ -361,20 +561,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/npct/pct-team/master/
 
 ---
 
-## Geoplumber
-
-GitHub package developed by Layik Hama - see [github.com/ATFutures](https://github.com/ATFutures/geoplumber)
-
-![](https://user-images.githubusercontent.com/1825120/46699371-7f79d000-cc11-11e8-9716-e1223296c7d6.gif)
-
-
----
-
-# What next?
-
----
-
-## Advances in raster data with R
+## Future: Advances in raster data with R
 
 Raster data in R is evolving:
 
@@ -403,40 +590,6 @@ raster::plot(spData::elev)
 ```{r, echo=FALSE, out.width="80%"}
 knitr::include_graphics("https://raw.githubusercontent.com/spnethack/spnethack/master/README_files/figure-gfm/pway-1.png")
 ```
-
-
----
-
-## Geographic 'leverage points' where R can help
-
-A few examples:
-
---
-
-- Visualising data: e.g [geoplumber](http://www.geoplumber.com/)
-
---
-
-- To the public - web viz pkgs help with that!
-
---
-
-- Local issues. E.g. where's the most dangerous/unpopular road in Newcastle?
-
---
-
-- Community cohesion
-
---
-
-
-Challenge: balance between innovation and tool overload
-
-
-Challenge: balance between transparency/simplicity and sophistication of analysis
-
-
-That is a balance R is ideally set-up to strike
 
 ---
 
@@ -471,14 +624,38 @@ For more on this see the book: [github.com/Robinlovelace/geocompr](https://githu
 - 2 day workshop: [lida.leeds.ac.uk/event](https://lida.leeds.ac.uk/event/geocomputation-data-analysis-r/)
 
 ---
+
+## Final practical session
+
+- Option 1: Continue to work through exercises in the book - pick a chapter!
+
+- Option 2: Work on reading in and mapping data related to your research (and ask for help)
+
+- Everyone: Get a GitHub account and submit something to the reproducible map competition here: [github.com/robinlovelace/geocompr/issues](https://github.com/robinlovelace/geocompr/issues)
+
+---
+
 class: center, middle
 
-# Thanks, links, happy R day travels 🚶, 🚲 +  🚀!
+# Thanks, links, happy (R)GS  🚶, 🚲 +  🚀!
 
-- Reproducible slides: [githttps://github.com/geocompr/geocompkgttps://github.com/Robgeocompr/geocompkg- Geocomputation (feedback welcome):
-[geocompr.robinlovelace.net](http://geocompr.robinlovelace.net/transport.html)
+- Reproducible slides: [github](https://github.com/geocompr/RGSWorkshop)
 
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
+--
+
+- Open source book: [geocompr.robinlovelace.net](https://geocompr.robinlovelace.net/)
+
+--
+
+- Support the project + open source: install it, use it, communicate!
+
+--
+
+- Twitter #geocompr, [@robinlovelace](https://twitter.com/robinlovelace), [@jakub_nowosad](https://twitter.com/jakub_nowosad/)
+
+
+
+Check out future R courses...
 
 --
 

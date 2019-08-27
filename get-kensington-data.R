@@ -50,12 +50,24 @@ tm_shape(crashes_near_rgs) +
   tm_shape(rnet_rgs) +
   tm_lines(lwd = "dutch_slc", col = "blue", alpha = 0.5, scale = 8)
 
+zones = get_pct_zones(region = "london")
+zones_near_rgs = zones[rgs_building_buffer, ]
+plot(zones_near_rgs)
+
+library(osmdata)
+kensington = getbb("kensington, london")
+osm_data = opq(bbox = kensington) %>% 
+  add_osm_feature(key = "leisure", value = "park") %>% 
+  osmdata_sf()
+parks = osm_data$osm_polygons
 
 # save data ---------------------------------------------------------------
 
 write_sf(rgs_building, "rgs_building.geojson")
 write_sf(rgs_building_buffer, "rgs_building_buffer.geojson")
 write_sf(crashes_near_rgs, "crashes_near_rgs.geojson")
+write_sf(zones_near_rgs, "zones_near_rgs.geojson")
+write_sf(parks, "parks.geojson")
 
 saveRDS(rnet_rgs, "rnet_rgs.rds")
-# piggyback::pb_new_release()
+piggyback::pb_upload("rnet_rgs.rds")
