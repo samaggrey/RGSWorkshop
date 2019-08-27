@@ -48,9 +48,18 @@ tm_shape(coffee_sf) + tm_dots()
 
 write.csv(coffee_df, "coffee.csv")
 
-#added data from back table
-name=c("Izzie","Greg", "Katherine", "Jeremy", "Kara")
-coffee=c(2,3,5,2,0)
-town=c("High Wickham","Budapest","Bristol","Chester","Buffalo")
-new_coffee=data.frame(name,coffee,town)
-new_coffee
+
+#### code from a new team
+person_name  = c("sam", "fazila","george", "david", "josh")
+n_coffee = c(9, 0,15,10, 20)
+hometown = c("london", "london","athens","carlisle","london")
+likes_tea = c(TRUE,TRUE,TRUE,TRUE,FALSE)
+class(person_name)
+class(n_coffee)
+class(hometown)
+
+geotablle = data.frame(
+  person_name,
+  n_coffee,
+  hometown
+)
